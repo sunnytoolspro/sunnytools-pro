@@ -1,0 +1,4 @@
+
+async function loadWeather(){
+ try{const r=await fetch(`${SUNNY_CONFIG.weather.baseUrl}?latitude=25.3463&longitude=55.4209&current=temperature_2m,weather_code,is_day&timezone=Asia%2FDubai`),j=await r.json(),t=Math.round(j.current.temperature_2m),d=weatherCode(j.current.weather_code);for(const id of ["weatherTemp","weatherMini"])if(document.getElementById(id))document.getElementById(id).textContent=t+"°C";for(const id of ["weatherDesc","weatherMiniDesc"])if(document.getElementById(id))document.getElementById(id).textContent=d}catch(e){if(document.getElementById("weatherDesc"))document.getElementById("weatherDesc").textContent="Unavailable"}}
+function weatherCode(c){if(c===0)return"Clear Sky";if([1,2,3].includes(c))return"Partly Cloudy";if([45,48].includes(c))return"Fog";if(c>=51&&c<=67)return"Rain";if(c>=71&&c<=77)return"Snow";if(c>=80&&c<=82)return"Rain Showers";if(c>=95)return"Thunderstorm";return"Live Weather"}

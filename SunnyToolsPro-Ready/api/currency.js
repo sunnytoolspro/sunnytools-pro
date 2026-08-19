@@ -1,0 +1,5 @@
+
+async function getCurrencyRate(base,quote){if(base===quote)return{rate:1};const r=await fetch(`${SUNNY_CONFIG.currency.baseUrl}/rate/${base}/${quote}`);if(!r.ok)throw Error("Currency API error");return r.json()}
+async function loadCurrency(){try{const b=fromCurrency.value,q=toCurrency.value,a=Number(amount.value||0),j=await getCurrencyRate(b,q);converted.value=(a*j.rate).toLocaleString(undefined,{maximumFractionDigits:2});liveRate.textContent=`1 ${b} = ${Number(j.rate).toFixed(5)} ${q}`;if(b==="AED")aedRate.textContent=`1 AED = ${Number(j.rate).toFixed(2)} ${q}`}catch(e){liveRate.textContent="Unavailable"}}
+async function loadCurrencyTable(){const qs=["PKR","INR","USD","GBP","EUR"],rates={};for(const q of qs){try{rates[q]=(await getCurrencyRate("AED",q)).rate}catch{}}currencyTable.innerHTML=[1,100,1000].map(a=>`<tr><td>${a}</td>${qs.map(q=>`<td>${rates[q]?(a*rates[q]).toFixed(2):"—"}</td>`).join("")}</tr>`).join("");try{usdAed.textContent=(await getCurrencyRate("USD","AED")).rate.toFixed(4)+" AED"}catch{}}
+function swapCurrencies(){[fromCurrency.value,toCurrency.value]=[toCurrency.value,fromCurrency.value];loadCurrency()}
