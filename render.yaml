@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: sunnytoolspro
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NEWS_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: JOBS_API_URL
+        sync: false
+      - key: JOBS_API_KEY
+        sync: false
+      - key: RENT_API_URL
+        sync: false
+      - key: RENT_API_KEY
+        sync: false
